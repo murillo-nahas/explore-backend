@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model State {
+  id               Int @id @default(autoincrement())
+  name             String @unique @map("name")
+  acronym          String @map("acronym")
+  createdAt        DateTime @default(now()) @map("created_at")
+  cities           City[]
+
+  @@map("states")
+}
+
+model City {
+  id              Int @id @default(autoincrement())
+  name            String @map("city_name")
+  acronym         String @map("city_acronym")
+  zipCode         String @unique @db.VarChar(8) @map("zip_code")
+  createdAt       DateTime @default(now()) @map("created_at")
+  stateId         Int @map("state_id")
+  places          Place[]
+
+  state State @relation(fields: [stateId], references: [id])
+
+  @@map("cities")
+}
+
+model Place {
+  id                Int @id @default(autoincrement())
+  name              String @map("place_name")
+  description       String @map("place_description")
+  googleMapsUrl     String @unique @map("google_maps_url")
+  address           String 
+  zipCode           String @unique @db.VarChar(8) @map("zip_code")
+  cityId            Int @map("city_id")
+
+  city City @relation(fields: [cityId], references: [id])
+
+  @@map("places")
+}
