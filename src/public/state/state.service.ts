@@ -9,8 +9,6 @@ export class StateService {
   async findAll() {
     const states = await this.prisma.state.findMany();
 
-    if (!states) throw new NotFoundException();
-
     return { states };
   }
 
@@ -21,7 +19,7 @@ export class StateService {
       },
     });
 
-    if (!state) return NotFoundException;
+    if (!state) throw new NotFoundException("Cannot find state.");
 
     return {
       state,
@@ -29,29 +27,27 @@ export class StateService {
   }
 
   async create(body: CreateStateSchema) {
-    const data = await this.prisma.state.create({
+    const state = await this.prisma.state.create({
       data: {
         name: body.name,
         acronym: body.acronym,
       },
     });
 
-    return data;
+    return state;
   }
 
-  async update(id: any, data: CreateStateSchema) {
-    return this.prisma.state.update({ where: { id }, data });
+  async update(id: number, data: CreateStateSchema) {
+    return await this.prisma.state.update({ where: { id }, data });
   }
 
   async delete(id: number) {
-    const deleteById = this.prisma.state.delete({
+    await this.prisma.state.delete({
       where: {
         id,
       },
     });
 
-    if (!deleteById) return NotFoundException;
-
-    return {};
+    return;
   }
 }

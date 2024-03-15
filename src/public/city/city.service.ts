@@ -15,8 +15,6 @@ export class CityService {
   async findAll() {
     const cities = await this.prisma.city.findMany();
 
-    if (!cities) throw new BadRequestException();
-
     return { cities };
   }
 
@@ -35,7 +33,7 @@ export class CityService {
   }
 
   async create(body: CreateCitySchema) {
-    const data = await this.prisma.city.create({
+    const city = await this.prisma.city.create({
       data: {
         name: body.name,
         acronym: body.acronym,
@@ -44,22 +42,20 @@ export class CityService {
       },
     });
 
-    return { data };
+    return { city };
   }
 
   async update(id: number, data: CreateCitySchema) {
-    return this.prisma.city.update({ where: { id }, data });
+    return await this.prisma.city.update({ where: { id }, data });
   }
 
   async delete(id: number) {
-    const deleteById = this.prisma.city.delete({
+    await this.prisma.city.delete({
       where: {
-        id: id,
+        id,
       },
     });
 
-    if (!deleteById) throw new NotFoundException("Cannot find city.");
-
-    return {};
+    return;
   }
 }
