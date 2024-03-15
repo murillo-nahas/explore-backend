@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  Body,
-  Injectable,
-  NotFoundException,
-} from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
@@ -18,7 +13,7 @@ export class StateService {
     return { states };
   }
 
-  async findById(id: number) {
+  async findOne(id: number) {
     const state = await this.prisma.state.findUnique({
       where: {
         id,
@@ -33,14 +28,29 @@ export class StateService {
   }
 
   async create(body: any) {
-    return "Hello World";
+    const data = await this.prisma.state.create({
+      data: {
+        acronym: body.acronym,
+        name: body.name,
+      },
+    });
+
+    return data;
   }
 
-  async update() {
-    return "Hello World";
+  async update(id: any, data: any) {
+    return this.prisma.state.update({ where: { id }, data });
   }
 
-  async delete() {
-    return "Hello World";
+  async delete(id: number) {
+    const deleteById = this.prisma.state.delete({
+      where: {
+        id,
+      },
+    });
+
+    if (!deleteById) return NotFoundException;
+
+    return {};
   }
 }
