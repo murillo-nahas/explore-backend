@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 export const createCityBodySchema = z.object({
-  name: z.string(),
-  acronym: z.string().max(2),
-  zipCode: z.string().max(8),
-  stateId: z.number(),
+  name: z.string().min(1),
+  acronym: z.string().min(1).max(2),
+  zipCode: z.string().min(1).max(8),
+  stateId: z.number().min(1),
 });
 
 export type CreateCitySchema = z.infer<typeof createCityBodySchema>;
