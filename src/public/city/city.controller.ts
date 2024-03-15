@@ -44,7 +44,7 @@ export class CityController {
 
   @Delete(":id")
   @HttpCode(204)
-  async delete(@Param("id") id: string) {
-    return this.service.delete(Number(id));
+  async delete(@Param("id") id: number) {
+    return this.service.delete(id);
   }
 }

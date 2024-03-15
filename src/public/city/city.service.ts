@@ -44,8 +44,6 @@ export class CityService {
       },
     });
 
-    if (!data) throw new UnprocessableEntityException();
-
     return { data };
   }
 
@@ -56,7 +54,7 @@ export class CityService {
   async delete(id: number) {
     const deleteById = this.prisma.city.delete({
       where: {
-        id,
+        id: id,
       },
     });
 
