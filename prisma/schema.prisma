@@ -26,7 +26,7 @@ model City {
   stateId         Int @map("state_id")
   places          Place[]
 
-  state State @relation(fields: [stateId], references: [id])
+  state State @relation(fields: [stateId], references: [id], onDelete: Cascade)
 
   @@map("cities")
 }
@@ -40,7 +40,7 @@ model Place {
   zipCode           String @unique @db.VarChar(8) @map("zip_code")
   cityId            Int @map("city_id")
 
-  city City @relation(fields: [cityId], references: [id])
+  city City @relation(fields: [cityId], references: [id], onDelete: Cascade)
 
   @@map("places")
 }
