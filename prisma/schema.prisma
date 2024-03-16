@@ -36,7 +36,9 @@ model Place {
   name              String @map("place_name")
   description       String @map("place_description")
   googleMapsUrl     String @unique @map("google_maps_url")
-  address           String 
+  street            String
+  number            Int
+  district          String
   zipCode           String @unique @db.VarChar(8) @map("zip_code")
   cityId            Int @map("city_id")
 
