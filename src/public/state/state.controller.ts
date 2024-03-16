@@ -18,33 +18,33 @@ import {
 
 @Controller("/state")
 export class StateController {
-  constructor(private stateService: StateService) {}
+  constructor(private service: StateService) {}
 
   @Get()
   async find() {
-    return this.stateService.findAll();
+    return this.service.findAll();
   }
 
   @Get(":id")
   async findOne(@Param("id") id: string) {
-    return this.stateService.findOne(Number(id));
+    return this.service.findOne(Number(id));
   }
 
   @Post()
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createStateBodySchema))
   async create(@Body() body: CreateStateSchema) {
-    return this.stateService.create(body);
+    return this.service.create(body);
   }
 
   @Put(":id")
   async update(@Param("id") id: string, @Body() data: CreateStateSchema) {
-    return this.stateService.update(Number(id), data);
+    return this.service.update(Number(id), data);
   }
 
   @Delete(":id")
   @HttpCode(204)
   async delete(@Param("id") id: string) {
-    return this.stateService.delete(Number(id));
+    return this.service.delete(Number(id));
   }
 }
