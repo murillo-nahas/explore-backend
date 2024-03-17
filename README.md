@@ -9,6 +9,9 @@ Find the best places by reading reviews, photos, rates, etc.
 - __Discover:__ Find cool places to hangout in your city.
 - __Authentication:__ Authenticate with your user.
 - __Reviews__: Let some reviews of the places that you have been!
+- __Bookmarks__: Save your favorite places.
+- __Likes__: Thumbs up to the places you like the most!
+- __Friendship__: Follow your friends and let them follow you too.
 - __Search__: Find even more cool places by searching/filtering.
 
 ## Technical stack
@@ -19,6 +22,7 @@ This project until 14/03/2024 is being developed with:
 - __Framework__: Nest.js
 - __Database__: Postgres
 - __ORM__: Prisma
+- __Schema validation__: Zod
 
 ## Credits
 
