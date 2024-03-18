@@ -56,6 +56,7 @@ model Place {
   cityId            String @map("city_id")
   categoryId        String @map("category_id")
   reviews           Review[]
+  likes             Like[]
 
   city City @relation(fields: [cityId], references: [id], onDelete: Cascade)
   category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -80,11 +81,24 @@ model User {
   updatedAt         DateTime @default(now()) @map("updated_at")
   deletedAt         DateTime? @map("deleted_at")
   reviews           Review[]
+  likes             Like[]
 }
 
 model Review {
   id                String @id @default(uuid())
   comment           String
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @default(now()) @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+  userId            String @map("user_id")
+  placeId           String @map("place_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  place Place @relation(fields: [placeId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  id                String @id @default(uuid())
   createdAt         DateTime @default(now()) @map("created_at")
   updatedAt         DateTime @default(now()) @map("updated_at")
   deletedAt         DateTime? @map("deleted_at")
