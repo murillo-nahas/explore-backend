@@ -8,41 +8,117 @@ datasource db {
 }
 
 model State {
-  id               Int @id @default(autoincrement())
-  name             String @unique @map("name")
-  acronym          String @map("acronym")
+  id               String @id @default(uuid())
+  name             String @unique 
+  country          String @unique
+  acronym          String 
   createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @default(now()) @map("updated_at")
+  deletedAt        DateTime? @map("deleted_at")
   cities           City[]
-
-  @@map("states")
 }
 
 model City {
-  id              Int @id @default(autoincrement())
-  name            String @map("city_name")
-  acronym         String @map("city_acronym")
+  id              String @id @default(uuid())
+  name            String
   zipCode         String @unique @db.VarChar(8) @map("zip_code")
+  googleMapsUri   String @unique @map("google_maps_uri")
   createdAt       DateTime @default(now()) @map("created_at")
-  stateId         Int @map("state_id")
+  updatedAt       DateTime @default(now()) @map("updated_at")
+  deletedAt       DateTime? @map("deleted_at")
+  stateId         String @map("state_id")
   places          Place[]
 
   state State @relation(fields: [stateId], references: [id], onDelete: Cascade)
+}
 
-  @@map("cities")
+model Category {
+  id                String @id @default(uuid())
+  name              String @unique
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @default(now()) @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+  places            Place[]
 }
 
 model Place {
-  id                Int @id @default(autoincrement())
-  name              String @map("place_name")
-  description       String @map("place_description")
-  googleMapsUrl     String @unique @map("google_maps_url")
+  id                String @id @default(uuid())
+  name              String
+  overview          String 
+  googleMapsUri     String @unique @map("google_maps_uri")
   street            String
-  number            Int
+  number            String
   district          String
   zipCode           String @unique @db.VarChar(8) @map("zip_code")
-  cityId            Int @map("city_id")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @default(now()) @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+  cityId            String @map("city_id")
+  categoryId        String @map("category_id")
+  reviews           Review[]
+  likes             Like[]
+  bookmarks         Bookmark[]
 
   city City @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
 
-  @@map("places")
+model Waitlister {
+  id                String @id @default(uuid())
+  email             String @unique
+  firstname         String 
+  createdAt         DateTime @default(now()) @map("created_at")
+}
+
+model User {
+  id                String @id @default(uuid())
+  email             String @unique
+  firstname         String 
+  username          String @unique
+  password          String
+  bio               String?
+  avatar            String?
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @default(now()) @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+  reviews           Review[]
+  likes             Like[]
+  bookmarks         Bookmark[]
+}
+
+model Review {
+  id                String @id @default(uuid())
+  comment           String
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @default(now()) @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+  userId            String @map("user_id")
+  placeId           String @map("place_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  place Place @relation(fields: [placeId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  id                String @id @default(uuid())
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @default(now()) @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+  userId            String @map("user_id")
+  placeId           String @map("place_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  place Place @relation(fields: [placeId], references: [id], onDelete: Cascade)
+}
+
+model Bookmark {
+  id                String @id @default(uuid())
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @default(now()) @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+  userId            String @map("user_id")
+  placeId           String @map("place_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  place Place @relation(fields: [placeId], references: [id], onDelete: Cascade)
 }

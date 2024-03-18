@@ -12,7 +12,7 @@ export class StateService {
     return { states };
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const state = await this.prisma.state.findUnique({
       where: {
         id,
@@ -30,6 +30,7 @@ export class StateService {
     const state = await this.prisma.state.create({
       data: {
         name: body.name,
+        country: body.country,
         acronym: body.acronym,
       },
     });
@@ -37,11 +38,11 @@ export class StateService {
     return state;
   }
 
-  async update(id: number, data: CreateStateSchema) {
+  async update(id: string, data: CreateStateSchema) {
     return await this.prisma.state.update({ where: { id }, data });
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     await this.prisma.state.delete({
       where: {
         id,

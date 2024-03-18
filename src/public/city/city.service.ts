@@ -1,10 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-  UnprocessableEntityException,
-} from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateCitySchema } from "src/schemas/city/create-city-schema";
 
@@ -18,7 +12,7 @@ export class CityService {
     return { cities };
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const city = await this.prisma.city.findUnique({
       where: {
         id,
@@ -36,8 +30,8 @@ export class CityService {
     const city = await this.prisma.city.create({
       data: {
         name: body.name,
-        acronym: body.acronym,
         zipCode: body.zipCode,
+        googleMapsUri: body.googleMapsUri,
         stateId: body.stateId,
       },
     });
@@ -45,11 +39,11 @@ export class CityService {
     return { city };
   }
 
-  async update(id: number, data: CreateCitySchema) {
+  async update(id: string, data: CreateCitySchema) {
     return await this.prisma.city.update({ where: { id }, data });
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     await this.prisma.city.delete({
       where: {
         id,

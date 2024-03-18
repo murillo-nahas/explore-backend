@@ -27,7 +27,7 @@ export class PlaceController {
 
   @Get(":id")
   async findOne(@Param("id") id: string) {
-    return this.service.findOne(Number(id));
+    return this.service.findOne(id);
   }
 
   @Post()
@@ -39,12 +39,12 @@ export class PlaceController {
 
   @Put(":id")
   async update(@Param("id") id: string, @Body() data: CreatePlaceSchema) {
-    return this.service.update(Number(id), data);
+    return this.service.update(id, data);
   }
 
   @Delete(":id")
   @HttpCode(204)
   async delete(@Param("id") id: string) {
-    return this.service.delete(Number(id));
+    return this.service.delete(id);
   }
 }
