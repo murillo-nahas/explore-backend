@@ -32,6 +32,14 @@ model City {
   state State @relation(fields: [stateId], references: [id], onDelete: Cascade)
 }
 
+model Category {
+  id                String @id @default(uuid())
+  name              String @unique
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @default(now()) @map("updated_at")
+  deletedAt         DateTime? @map("deleted_at")
+}
+
 model Place {
   id                String @id @default(uuid())
   name              String
