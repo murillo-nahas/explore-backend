@@ -4,6 +4,8 @@ This repository was designed for the backend of Explore app. <br/>
 Explore app is a cool webapp for finding cool places to hangout, eat and so on, in your city. <br/>
 Find the best places by reading reviews, photos, rates, etc. 
 
+![Explore modeling](https://github.com/murillo-nahas/explore-backend/assets/71032453/d62d6c6e-d6d6-463e-aa30-2616861bd574)
+
 ## Features
 
 - __Discover:__ Find cool places to hangout in your city.
