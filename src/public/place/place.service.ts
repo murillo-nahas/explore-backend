@@ -14,7 +14,7 @@ export class PlaceService {
     };
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const place = await this.prisma.place.findUnique({
       where: {
         id,
@@ -32,24 +32,25 @@ export class PlaceService {
     const place = await this.prisma.place.create({
       data: {
         name: body.name,
-        description: body.description,
-        googleMapsUrl: body.googleMapsUrl,
+        overview: body.overview,
+        googleMapsUri: body.googleMapsUri,
         street: body.street,
         number: body.number,
         district: body.district,
         zipCode: body.zipCode,
         cityId: body.cityId,
+        categoryId: body.categoryId,
       },
     });
 
     return place;
   }
 
-  async update(id: number, data: CreatePlaceSchema) {
+  async update(id: string, data: CreatePlaceSchema) {
     return await this.prisma.place.update({ where: { id }, data });
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     await this.prisma.place.delete({
       where: {
         id,
