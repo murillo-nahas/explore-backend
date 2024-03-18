@@ -59,3 +59,10 @@ model Place {
   city City @relation(fields: [cityId], references: [id], onDelete: Cascade)
   category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
+
+model Waitlister {
+  id                String @id @default(uuid())
+  email             String @unique
+  firstname         String 
+  createdAt         DateTime @default(now()) @map("created_at")
+}
