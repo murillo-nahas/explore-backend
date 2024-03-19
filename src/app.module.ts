@@ -4,9 +4,16 @@ import { PrismaService } from "./prisma/prisma.service";
 import { CityModule } from "./public/city/city.module";
 import { PlaceModule } from "./public/place/place.module";
 import { CategoryModule } from "./public/category/category.module";
+import { WaitlistModule } from "./public/waitlist/waitlist.module";
 
 @Module({
-  imports: [StateModule, CityModule, PlaceModule, CategoryModule],
+  imports: [
+    StateModule,
+    CityModule,
+    PlaceModule,
+    CategoryModule,
+    WaitlistModule,
+  ],
   controllers: [],
   providers: [PrismaService],
 })
