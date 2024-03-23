@@ -6,7 +6,7 @@ import {
   createUserBodySchema,
 } from "src/schemas/user/create-user-schema";
 
-@Controller("user")
+@Controller("/user")
 export class UserController {
   constructor(private readonly service: UserService) {}
 
