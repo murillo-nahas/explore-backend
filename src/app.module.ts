@@ -5,7 +5,8 @@ import { CityModule } from "./public/city/city.module";
 import { PlaceModule } from "./public/place/place.module";
 import { CategoryModule } from "./public/category/category.module";
 import { WaitlistModule } from "./public/waitlist/waitlist.module";
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from "./auth/auth.module";
+import { UserModule } from "./public/user/user.module";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
     CategoryModule,
     WaitlistModule,
     AuthModule,
+    UserModule,
   ],
   controllers: [],
   providers: [PrismaService],
