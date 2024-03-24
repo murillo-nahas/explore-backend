@@ -7,30 +7,30 @@ export class ReviewService {
   constructor(private prisma: PrismaService) {}
 
   async findAllReviewsByUser(userId: string) {
-    const review = await this.prisma.review.findMany({
+    const reviews = await this.prisma.review.findMany({
       where: {
         userId: userId,
       },
     });
 
-    if (!review) throw new NotFoundException("Cannot find user.");
+    if (!reviews) throw new NotFoundException("Cannot find user.");
 
     return {
-      review,
+      reviews,
     };
   }
 
   async findAllReviewsByPlace(placeId: string) {
-    const review = await this.prisma.review.findMany({
+    const reviews = await this.prisma.review.findMany({
       where: {
         placeId: placeId,
       },
     });
 
-    if (!review) throw new NotFoundException("Cannot find place.");
+    if (!reviews) throw new NotFoundException("Cannot find place.");
 
     return {
-      review,
+      reviews,
     };
   }
 
