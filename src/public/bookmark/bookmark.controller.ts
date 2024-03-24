@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
-import { BookmarkService } from './bookmark.service';
+import { Controller } from "@nestjs/common";
+import { BookmarkService } from "./bookmark.service";
 
-@Controller('bookmark')
+@Controller("/bookmark")
 export class BookmarkController {
-  constructor(private readonly bookmarkService: BookmarkService) {}
+  constructor(private service: BookmarkService) {}
 }

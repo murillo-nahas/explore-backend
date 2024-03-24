@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
-import { LikeService } from './like.service';
+import { Controller } from "@nestjs/common";
+import { LikeService } from "./like.service";
 
-@Controller('like')
+@Controller("/like")
 export class LikeController {
-  constructor(private readonly likeService: LikeService) {}
+  constructor(private service: LikeService) {}
 }
