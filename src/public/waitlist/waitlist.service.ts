@@ -18,4 +18,12 @@ export class WaitlistService {
       waitlister,
     };
   }
+
+  async findAll() {
+    const waitlisters = await this.prisma.waitlister.findMany();
+
+    return {
+      waitlisters,
+    };
+  }
 }
