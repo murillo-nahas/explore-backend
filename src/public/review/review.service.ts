@@ -9,7 +9,7 @@ export class ReviewService {
   async findAllReviewsByUser(userId: string) {
     const review = await this.prisma.review.findMany({
       where: {
-        id: userId,
+        userId: userId,
       },
     });
 
@@ -23,7 +23,7 @@ export class ReviewService {
   async findAllReviewsByPlace(placeId: string) {
     const review = await this.prisma.review.findMany({
       where: {
-        id: placeId,
+        placeId: placeId,
       },
     });
 
