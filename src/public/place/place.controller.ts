@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UsePipes,
 } from "@nestjs/common";
 import { PlaceService } from "./place.service";
@@ -15,8 +16,10 @@ import {
   CreatePlaceSchema,
   createPlaceBodySchema,
 } from "src/schemas/place/create-place-schema";
+import { JwtAuthGuard } from "src/utils/jwt-auth-guard";
 
 @Controller("/place")
+@UseGuards(JwtAuthGuard)
 export class PlaceController {
   constructor(private service: PlaceService) {}
 
