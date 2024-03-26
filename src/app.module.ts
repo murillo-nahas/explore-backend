@@ -10,15 +10,21 @@ import { UserModule } from "./public/user/user.module";
 import { BookmarkModule } from "./public/bookmark/bookmark.module";
 import { LikeModule } from "./public/like/like.module";
 import { ReviewModule } from "./public/review/review.module";
+import { ConfigModule } from "@nestjs/config";
+import { envSchema } from "./env";
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      validate: (env) => envSchema.parse(env),
+      isGlobal: true,
+    }),
+    AuthModule,
     StateModule,
     CityModule,
     PlaceModule,
     CategoryModule,
     WaitlistModule,
-    AuthModule,
     UserModule,
     BookmarkModule,
     LikeModule,
