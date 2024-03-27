@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UsePipes,
 } from "@nestjs/common";
 import { ReviewService } from "./review.service";
@@ -15,12 +16,14 @@ import {
   CreateReviewSchema,
   createReviewBodySchema,
 } from "src/schemas/review/create-review-schema";
+import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 
 @Controller("/review")
 export class ReviewController {
   constructor(private service: ReviewService) {}
 
   @Get(":id")
+  @UseGuards(JwtAuthGuard)
   findAllReviewsByUser(@Param("id") userId: string) {
     return this.service.findAllReviewsByUser(userId);
   }
@@ -31,6 +34,7 @@ export class ReviewController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createReviewBodySchema))
   async create(@Body() body: CreateReviewSchema) {
@@ -38,11 +42,13 @@ export class ReviewController {
   }
 
   @Put(":id")
+  @UseGuards(JwtAuthGuard)
   async update(@Param("id") id: string, @Body() data: CreateReviewSchema) {
     return this.service.update(id, data);
   }
 
   @Delete(":id")
+  @UseGuards(JwtAuthGuard)
   @HttpCode(204)
   async delete(@Param("id") id: string) {
     return this.service.delete(id);

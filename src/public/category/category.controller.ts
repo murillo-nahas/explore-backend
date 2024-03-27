@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UsePipes,
 } from "@nestjs/common";
 import { CategoryService } from "./category.service";
@@ -16,6 +17,7 @@ import {
   CreateCategorySchema,
   createCategoryBodySchema,
 } from "src/schemas/category/create-category-schema";
+import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 
 @Controller("/category")
 export class CategoryController {
@@ -32,6 +34,7 @@ export class CategoryController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createCategoryBodySchema))
   async create(@Body() body: CreateCategorySchema) {
@@ -39,11 +42,13 @@ export class CategoryController {
   }
 
   @Put(":id")
+  @UseGuards(JwtAuthGuard)
   async update(@Param("id") id: string, @Body() data: CreateCategorySchema) {
     return this.service.update(id, data);
   }
 
   @Delete(":id")
+  @UseGuards(JwtAuthGuard)
   @HttpCode(204)
   async delete(@Param("id") id: string) {
     return this.service.delete(id);

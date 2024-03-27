@@ -16,10 +16,9 @@ import {
   CreatePlaceSchema,
   createPlaceBodySchema,
 } from "src/schemas/place/create-place-schema";
-import { JwtAuthGuard } from "src/utils/jwt-auth-guard";
+import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 
 @Controller("/place")
-@UseGuards(JwtAuthGuard)
 export class PlaceController {
   constructor(private service: PlaceService) {}
 
@@ -34,6 +33,7 @@ export class PlaceController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createPlaceBodySchema))
   async create(@Body() body: CreatePlaceSchema) {
@@ -41,11 +41,13 @@ export class PlaceController {
   }
 
   @Put(":id")
+  @UseGuards(JwtAuthGuard)
   async update(@Param("id") id: string, @Body() data: CreatePlaceSchema) {
     return this.service.update(id, data);
   }
 
   @Delete(":id")
+  @UseGuards(JwtAuthGuard)
   @HttpCode(204)
   async delete(@Param("id") id: string) {
     return this.service.delete(id);
