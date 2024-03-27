@@ -6,7 +6,7 @@ import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { Env } from "src/env";
-import { JwtStrategy } from "src/utils/jwt-strategy";
+import { JwtStrategy } from "src/auth/strategies/jwt-strategy";
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { JwtStrategy } from "src/utils/jwt-strategy";
         const publicKey = config.get("JWT_PUBLIC_KEY", { infer: true });
 
         return {
-          signOptions: { algorithm: "RS256" },
+          signOptions: { algorithm: "RS256", expiresIn: "30 days" },
           privateKey: Buffer.from(privateKey, "base64"),
           publicKey: Buffer.from(publicKey, "base64"),
         };
